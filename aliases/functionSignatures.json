@@ -1,0 +1,3 @@
+{
+"h5file": {"inputs": [{"name":"filepath","type":"filepath=*.h5"}]}
+}

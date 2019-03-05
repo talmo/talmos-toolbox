@@ -1,0 +1,23 @@
+For Visual Studio 2015:
+1. Open the Visual Studio command prompt which sets all the paths and other environmental variables for you:
+	Start Menu -> Visual Studio 2015 -> Visual Studio Tools -> Windows Desktop Command Prompts -> VS2015 x64 Native Tools Command Prompt
+
+2. Navigate to bh-tsne folder
+
+3. Compile :)
+	nmake -f Makefile.win all
+
+Successful output:
+C:\Users\Talmo\Desktop\sandbox\bhtsne-master>nmake -f Makefile.win all
+
+Microsoft (R) Program Maintenance Utility Version 14.00.23026.0
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+        cl.exe /nologo /O2 /EHsc /D "_CRT_SECURE_NO_DEPRECATE" /D "USEOMP" /open
+mp -c tsne.cpp
+tsne.cpp
+        cl.exe /nologo /O2 /EHsc /D "_CRT_SECURE_NO_DEPRECATE" /D "USEOMP" /open
+mp -c sptree.cpp
+sptree.cpp
+        cl.exe /nologo /O2 /EHsc /D "_CRT_SECURE_NO_DEPRECATE" /D "USEOMP" /open
+mp tsne.obj sptree.obj -Fewindows\bh_tsne.exe

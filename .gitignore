@@ -1,0 +1,12 @@
+# Auto-save files
+*.m~
+*.asv
+
+# Media
+*.avi
+*.png
+*.fig
+*.eps
+
+lab/*
+sync.ffs_db

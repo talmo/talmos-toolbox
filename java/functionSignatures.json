@@ -1,0 +1,18 @@
+{
+    "javapaths": {
+        "inputs": [
+            {"name": "cmd", "type": ["char", "choices={'-lines','-path','-edit'}"]}
+        ]
+    },
+    "javapaths": {
+        "inputs": [
+            {"name": "cmd", "kind": "required", "type": ["char", "choices={'-add','-remove'}"]},
+            {"name": "jarPath", "kind": "required", "type": "file=*.jar,*.JAR"}
+        ]
+    },
+    "javapaths": {
+        "inputs": [
+            {"name": "jarPath", "kind": "required", "type": "file=*.jar,*.JAR"}
+        ]
+    }
+}

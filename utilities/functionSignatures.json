@@ -1,0 +1,3 @@
+{
+"loadvar": {"inputs": [{"name":"mat_file","type":"filepath=*.mat"}]}
+}

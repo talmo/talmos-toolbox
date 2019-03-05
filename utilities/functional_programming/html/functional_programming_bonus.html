@@ -1,0 +1,263 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Bonus Examples</title><meta name="generator" content="MATLAB 8.3"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-07-25"><meta name="DC.source" content="functional_programming_bonus.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Bonus Examples</h1><!--introduction--><p>Tucker McClure</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Bonus 1: Please</a></li><li><a href="#2">Bonus 2: Anonymous Do-While</a></li><li><a href="#3">Bonus 3: A Large Program</a></li></ul></div><h2>Bonus 1: Please<a name="1"></a></h2><p>If it doesn't work, try saying "please".</p><pre class="codeinput">please = @(f) feval(curly({fprintf(<span class="string">'Since you asked nicely...\n'</span>), f}, 2));
+
+<span class="comment">% Example:</span>
+please(@why)
+</pre><pre class="codeoutput">Since you asked nicely...
+The bald and not excessively bald and not excessively smart hamster obeyed a terrified and not excessively terrified hamster.
+</pre><h2>Bonus 2: Anonymous Do-While<a name="2"></a></h2><p>In the examples, we didn't show how to create a do-while loop anonymously. Here it is.</p><pre class="codeinput">dowhile = @(x0, cont, fcn, cleanup) recur(<span class="keyword">...</span><span class="comment"> % Make the recursion.</span>
+    @(f, x) use(fcn(x), @(z) <span class="keyword">...</span><span class="comment">              %   Run the fcn, save as z.</span>
+                iif(cont(z), @() f(f, z), <span class="keyword">...</span><span class="comment"> %   Continue?</span>
+                    true,    cleanup(z))),<span class="keyword">...</span><span class="comment"> % Stop, clean up.</span>
+    x0);                                      <span class="comment">% Initial state</span>
+
+<span class="comment">% Create a function to draw sets of numbers until it draws n positive</span>
+<span class="comment">% numbers in a row.</span>
+draw_until_all_positive = @(n) dowhile([], <span class="keyword">...</span><span class="comment">               % No x0</span>
+                                       @(x) any(x &lt; 0), <span class="keyword">...</span><span class="comment">  % Until all &gt;0</span>
+                                       @(~) randn(1, n), <span class="keyword">...</span><span class="comment"> %   Draw set</span>
+                                       @(x) x);              <span class="comment">% Return set</span>
+
+fprintf(<span class="string">'Draw numbers until we get 5 positive numbers in a row.\n'</span>);
+draw_until_all_positive(5)
+</pre><pre class="codeoutput">Draw numbers until we get 5 positive numbers in a row.
+ans =
+  Columns 1 through 3
+         0.949221831131023         0.307061919146703         0.135174942099456
+  Columns 4 through 5
+         0.515246335524849         0.261406324055383
+</pre><h2>Bonus 3: A Large Program<a name="3"></a></h2><p>This is probably not the world's best example of good programming practices, but it does serve to illustrate that entire programs <b>can</b> be built with anonymous functions (whether or not they <b>should</b> be built this way or whether this is the best way to do it are very different questions).</p><p>This example uses most of the techniques developed in the functional_programming_examples (though it uses the .m versions instead of the anonymous versions), including <tt>forloop</tt>, <tt>iif</tt>, <tt>last</tt>, <tt>use</tt>, <tt>recur</tt>, <tt>tern</tt>, and <tt>void</tt>. Creating this example also served to prompt me to make functions that simplify programming this way.</p><pre class="codeinput"><span class="comment">% Set up the figure.</span>
+figure(1);
+clf();
+set(1, <span class="string">'Color'</span>, <span class="string">'k'</span>);
+axis([-20 20 0 25], <span class="string">'off'</span>);
+set(gca(), <span class="string">'Position'</span>, [0 0 1 1]);
+hold(<span class="string">'on'</span>);
+
+<span class="comment">% Create some constants.</span>
+nf = 6;       <span class="comment">% Number of fireworks</span>
+np = 100;     <span class="comment">% Number of particles per firework</span>
+n  = nf * np; <span class="comment">% Total number of particles</span>
+dt = 1/24;    <span class="comment">% Time step</span>
+
+<span class="comment">% Create some fireworks.</span>
+create_fireworks = @() forloop([], nf, @(p,~) <span class="keyword">...</span>
+    use(2*randn, rand, @(x, y) <span class="keyword">...</span>
+    [p repmat([2*x, -5*y, 5*x, 20*y+30]', 1, np)]));
+
+<span class="comment">% Plot the fireworks.</span>
+random_color = @() 1./(1+exp(-20*(rand(1, 3)-0.4))); <span class="comment">% It's a sigmoid fcn.</span>
+create_plot = @(x0) forloop([], nf, @(h,~) <span class="keyword">...</span>
+    [h plot(x0(1,:), x0(2,:), <span class="string">'.'</span>, <span class="string">'Color'</span>, random_color())]);
+limit = @(x) min(max(x, 0), 1);
+update_plot = @(x, h, k) forloop([], nf, @(~,z) <span class="keyword">...</span>
+    void(@() set(h(z), <span class="string">'XData'</span>, x(1, np*(z-1)+1:np*z), <span class="keyword">...</span>
+                       <span class="string">'YData'</span>, x(2, np*(z-1)+1:np*z), <span class="keyword">...</span>
+                       <span class="string">'Color'</span>, limit(1.03-1e-3*k) * get(h(z),<span class="string">'Color'</span>))));
+
+<span class="comment">% Propagate the fireworks' particles. At k == 25, make them explode.</span>
+explode  = @(x) x + [zeros(2, n); 5*randn(2, n)];
+Phi      = expm(dt*[0 0 1 0; 0 0 0 1; 0 0 -1 0; 0 0 0 -1]);
+g        = repmat([0 -dt*9.81 0 -0.5*9.81*dt^2]', 1, n);
+update_x = @(k, x) Phi * tern(k==25, @() explode(x), @() x) + g;
+
+<span class="comment">% Functions to change callback and show text.</span>
+set_callback = @(cb) void(@() set(gcf, <span class="string">'WindowButtonDownFcn'</span>, cb));
+show_text    = @() text(0, 1, <span class="string">'Click for fireworks.'</span>, <span class="keyword">...</span>
+                        <span class="string">'HorizontalAlignment'</span>, <span class="string">'center'</span>, <span class="keyword">...</span>
+                        <span class="string">'Color'</span>, <span class="string">'w'</span>);
+
+<span class="comment">% Create the anonymous program.</span>
+fireworks = @() recur(@(self) {<span class="keyword">...</span><span class="comment">                 % To reference itself.</span>
+    set_callback([]), <span class="keyword">...</span><span class="comment">                          % Clear the callback.</span>
+    void(@() delete(findobj(<span class="string">'Type'</span>, <span class="string">'text'</span>))), <span class="keyword">...</span><span class="comment"> % Delete the text.</span>
+    use(create_fireworks(), @(x0) <span class="keyword">...</span><span class="comment">              % Create positions, x0.</span>
+    use(create_plot(x0),    @(h) <span class="keyword">...</span><span class="comment">               % Plot, keep handle, h.</span>
+    {forloop(x0, 100, @(x,k) <span class="keyword">...</span><span class="comment">                   % Loop from k=1:100.</span>
+             last(update_plot(x,h,k), <span class="keyword">...</span><span class="comment">          %   Update plot.</span>
+                  void(@() pause(dt)), <span class="keyword">...</span><span class="comment">         %   Wait.</span>
+                  {update_x(k,x)})), <span class="keyword">...</span><span class="comment">           %   Update state.</span>
+	 void(@() delete(h))} <span class="keyword">...</span><span class="comment">                      % Delete fireworks.</span>
+    )), <span class="keyword">...</span><span class="comment">                                        % (End of x0, h scope.)</span>
+	show_text(), <span class="keyword">...</span><span class="comment">                               % Create text again.</span>
+    set_callback(@(~, ~) self(self))});            <span class="comment">% Restore callback.</span>
+
+<span class="comment">% Execute the anonymous program, which will also attach 'fireworks' to the</span>
+<span class="comment">% button click callback.</span>
+fireworks();
+</pre><p class="footer">Copyright 2013 The MathWorks, Inc.<br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2014a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Bonus Examples
+% Tucker McClure
+% Copyright 2013 The MathWorks, Inc.
+
+%% Bonus 1: Please
+% If it doesn't work, try saying "please".
+
+please = @(f) feval(curly({fprintf('Since you asked nicely...\n'), f}, 2));
+
+% Example:
+please(@why)
+
+%% Bonus 2: Anonymous Do-While
+% In the examples, we didn't show how to create a do-while loop
+% anonymously. Here it is.
+
+dowhile = @(x0, cont, fcn, cleanup) recur(... % Make the recursion.
+    @(f, x) use(fcn(x), @(z) ...              %   Run the fcn, save as z.
+                iif(cont(z), @() f(f, z), ... %   Continue?
+                    true,    cleanup(z))),... % Stop, clean up.
+    x0);                                      % Initial state
+
+% Create a function to draw sets of numbers until it draws n positive
+% numbers in a row.
+draw_until_all_positive = @(n) dowhile([], ...               % No x0
+                                       @(x) any(x < 0), ...  % Until all >0
+                                       @(~) randn(1, n), ... %   Draw set
+                                       @(x) x);              % Return set
+                          
+fprintf('Draw numbers until we get 5 positive numbers in a row.\n');
+draw_until_all_positive(5)
+
+%% Bonus 3: A Large Program
+% This is probably not the world's best example of good programming
+% practices, but it does serve to illustrate that entire programs *can* be
+% built with anonymous functions (whether or not they *should* be built
+% this way or whether this is the best way to do it are very different 
+% questions).
+% 
+% This example uses most of the techniques developed in the 
+% functional_programming_examples (though it uses the .m versions instead 
+% of the anonymous versions), including |forloop|, |iif|, |last|, |use|, 
+% |recur|, |tern|, and |void|. Creating this example also served to prompt 
+% me to make functions that simplify programming this way.
+
+% Set up the figure.
+figure(1);
+clf();
+set(1, 'Color', 'k');
+axis([-20 20 0 25], 'off');
+set(gca(), 'Position', [0 0 1 1]);
+hold('on');
+
+% Create some constants.
+nf = 6;       % Number of fireworks
+np = 100;     % Number of particles per firework
+n  = nf * np; % Total number of particles
+dt = 1/24;    % Time step
+
+% Create some fireworks.
+create_fireworks = @() forloop([], nf, @(p,~) ...
+    use(2*randn, rand, @(x, y) ...
+    [p repmat([2*x, -5*y, 5*x, 20*y+30]', 1, np)]));
+
+% Plot the fireworks.
+random_color = @() 1./(1+exp(-20*(rand(1, 3)-0.4))); % It's a sigmoid fcn.
+create_plot = @(x0) forloop([], nf, @(h,~) ...
+    [h plot(x0(1,:), x0(2,:), '.', 'Color', random_color())]);
+limit = @(x) min(max(x, 0), 1);
+update_plot = @(x, h, k) forloop([], nf, @(~,z) ...
+    void(@() set(h(z), 'XData', x(1, np*(z-1)+1:np*z), ...
+                       'YData', x(2, np*(z-1)+1:np*z), ...
+                       'Color', limit(1.03-1e-3*k) * get(h(z),'Color'))));
+
+% Propagate the fireworks' particles. At k == 25, make them explode.
+explode  = @(x) x + [zeros(2, n); 5*randn(2, n)];
+Phi      = expm(dt*[0 0 1 0; 0 0 0 1; 0 0 -1 0; 0 0 0 -1]);
+g        = repmat([0 -dt*9.81 0 -0.5*9.81*dt^2]', 1, n);
+update_x = @(k, x) Phi * tern(k==25, @() explode(x), @() x) + g;
+
+% Functions to change callback and show text.
+set_callback = @(cb) void(@() set(gcf, 'WindowButtonDownFcn', cb));
+show_text    = @() text(0, 1, 'Click for fireworks.', ...
+                        'HorizontalAlignment', 'center', ...
+                        'Color', 'w');
+
+% Create the anonymous program.
+fireworks = @() recur(@(self) {...                 % To reference itself.
+    set_callback([]), ...                          % Clear the callback.
+    void(@() delete(findobj('Type', 'text'))), ... % Delete the text.
+    use(create_fireworks(), @(x0) ...              % Create positions, x0.
+    use(create_plot(x0),    @(h) ...               % Plot, keep handle, h.
+    {forloop(x0, 100, @(x,k) ...                   % Loop from k=1:100.
+             last(update_plot(x,h,k), ...          %   Update plot.
+                  void(@() pause(dt)), ...         %   Wait.
+                  {update_x(k,x)})), ...           %   Update state.
+	 void(@() delete(h))} ...                      % Delete fireworks.
+    )), ...                                        % (End of x0, h scope.)
+	show_text(), ...                               % Create text again.
+    set_callback(@(~, ~) self(self))});            % Restore callback.
+
+% Execute the anonymous program, which will also attach 'fireworks' to the
+% button click callback.
+fireworks();
+
+##### SOURCE END #####
+--></body></html>

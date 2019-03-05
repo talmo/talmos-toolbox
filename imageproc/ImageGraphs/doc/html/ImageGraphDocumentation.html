@@ -1,0 +1,316 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Image Graph Documentation</title><meta name="generator" content="MATLAB 8.6"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2015-10-16"><meta name="DC.source" content="ImageGraphDocumentation.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>Image Graph Documentation</h1><!--introduction--><p>These prototype MATLAB functions create and plot graphs from images based on neighbor relationships between pixels. You must have MATLAB R2015b to use them.</p><p><a href="matlab:doc('imageGraph')"><tt>imageGraph</tt></a> creates a graph representing the neighbor relationships for every pixel in an image with a specified size. <tt>imageGraph3</tt> does the same thing for a 3-D image array.</p><p><a href="matlab:doc('binaryImageGraph')"><tt>binaryImageGraph</tt></a> creates a graph representing the neighbor relationships for every foreground pixel in a binary image. <tt>binaryImageGraph3</tt> creates a graph from a 3-D binary image array.</p><p><a href="matlab:doc('plotImageGraph')"><tt>plotImageGraph</tt></a> plots a graph created by <tt>imageGraph</tt> or <tt>binaryImageGraph</tt> with the graph nodes arranged on a pixel grid.</p><p><a href="matlab:doc('adjacentRegionGraph')"><tt>adjacentRegionGraph</tt></a> creates a graph from a label matrix defining image regions. The graph represents the region adjacency relationships.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Example: Image graph with 8-connected pixels</a></li><li><a href="#4">Example: Image graph with 4-connected pixels</a></li><li><a href="#6">Example: Image graph with special connectivity</a></li><li><a href="#7">Example: Binary image graph</a></li><li><a href="#9">Region Graphs</a></li><li><a href="#11">Example: Region graph</a></li></ul></div><h2>Example: Image graph with 8-connected pixels<a name="1"></a></h2><p>Create a graph for a 480-by-640 image with 8-connected pixels.</p><pre class="codeinput">g = imageGraph([480 640],8)
+</pre><pre class="codeoutput">
+g = 
+
+  graph with properties:
+
+    Edges: [1225442x2 table]
+    Nodes: [307200x3 table]
+
+</pre><p>Graph nodes contain the x-coordinate, y-coordinate, and linear index of the corresponding image pixels.</p><pre class="codeinput">g.Nodes(1:5,:)
+</pre><pre class="codeoutput">
+ans = 
+
+    x    y    PixelIndex
+    _    _    __________
+
+    1    1    1         
+    1    2    2         
+    1    3    3         
+    1    4    4         
+    1    5    5         
+
+</pre><p>Plot the image graph using <tt>plotImageGraph</tt>.</p><pre class="codeinput">plotImageGraph(g)
+axis([100 110 220 230])
+</pre><img vspace="5" hspace="5" src="ImageGraphDocumentation_01.png" style="width:560px;height:420px;" alt=""> <h2>Example: Image graph with 4-connected pixels<a name="4"></a></h2><p>Create a graph for a 480-by-640 image with 4-connected pixels.</p><pre class="codeinput">g = imageGraph([480 640],4)
+</pre><pre class="codeoutput">
+g = 
+
+  graph with properties:
+
+    Edges: [613280x2 table]
+    Nodes: [307200x3 table]
+
+</pre><pre class="codeinput">plotImageGraph(g)
+axis([100 110 220 230])
+</pre><img vspace="5" hspace="5" src="ImageGraphDocumentation_02.png" style="width:560px;height:420px;" alt=""> <h2>Example: Image graph with special connectivity<a name="6"></a></h2><p>Use a 3-by-3 connectivity matrix to create an image graph with 6-connected pixels. Each pixel is connected to its north, northeast, east, south, southwest, and west neighbors.</p><pre class="codeinput">conn = [0 1 1; 1 1 1; 1 1 0];
+g = imageGraph([480 640],conn);
+plotImageGraph(g)
+axis([100 110 220 230])
+</pre><img vspace="5" hspace="5" src="ImageGraphDocumentation_03.png" style="width:560px;height:420px;" alt=""> <h2>Example: Binary image graph<a name="7"></a></h2><p>Create a graph whose nodes are the foreground pixels of the binary image text.png (a sample image that is included with the Image Processing Toolbox).</p><pre class="codeinput">bw = imread(<span class="string">'text.png'</span>);
+imshow(bw)
+title(<span class="string">'Original image'</span>)
+</pre><img vspace="5" hspace="5" src="ImageGraphDocumentation_04.png" style="width:191px;height:157px;" alt=""> <pre class="codeinput">g = binaryImageGraph(bw);
+figure
+plotImageGraph(g)
+axis([60 85 30 45])
+</pre><img vspace="5" hspace="5" src="ImageGraphDocumentation_05.png" style="width:560px;height:420px;" alt=""> <h2>Region Graphs<a name="9"></a></h2><p>A label matrix defines a set of regions based on each unique element value in the matrix. For example, suppose you had the following label matrix:</p><pre class="codeinput">L = [10 10 3 4.5 4.5; 10 10 3 4.5 4.5; 20 20 3 15 15; 20 20 3 15 15]
+</pre><pre class="codeoutput">
+L =
+
+   10.0000   10.0000    3.0000    4.5000    4.5000
+   10.0000   10.0000    3.0000    4.5000    4.5000
+   20.0000   20.0000    3.0000   15.0000   15.0000
+   20.0000   20.0000    3.0000   15.0000   15.0000
+
+</pre><p>This label matrix defines 5 regions:</p><div><ul><li>A 2-by-2 region in the upper left labeled with the value 10.</li><li>A 2-by-2 region in the lower left labeled with the value 20.</li><li>A one-pixel-wide vertical region in the middle labeled with the value 3.</li><li>A 2-by-2 region in the upper right labeled with the value 4.5.</li><li>A 2-by-2 region at the lower right labeled with the value 15.</li></ul></div><p>The function <tt>adjacentRegionsGraph</tt> returns a graph with the same number of nodes as labeled regions. Edges in the graph indicate pairs of adjacent regions.</p><h2>Example: Region graph<a name="11"></a></h2><p>Compute an adjacent regions graph. Plot the graph, highlighting the nodes connected to the label 15.</p><pre class="codeinput">g = adjacentRegionsGraph(L)
+</pre><pre class="codeoutput">
+g = 
+
+  graph with properties:
+
+    Edges: [6x2 table]
+    Nodes: [5x1 table]
+
+</pre><p>The graph nodes contain the region labels.</p><pre class="codeinput">g.Nodes
+</pre><pre class="codeoutput">
+ans = 
+
+    Label
+    _____
+
+      3  
+    4.5  
+     10  
+     15  
+     20  
+
+</pre><p>The graph edges contain the labels for each adjacent region pair.</p><pre class="codeinput">g.Edges
+</pre><pre class="codeoutput">
+ans = 
+
+    EndNodes      Labels  
+    ________    __________
+
+    1    2        3    4.5
+    1    3        3     10
+    1    4        3     15
+    1    5        3     20
+    2    4      4.5     15
+    3    5       10     20
+
+</pre><p>Plot the graph, capturing the GraphPlot object as an output argument.</p><pre class="codeinput">gp = plot(g,<span class="string">'NodeLabel'</span>,g.Nodes.Label)
+</pre><pre class="codeoutput">
+gp = 
+
+  GraphPlot with properties:
+
+     NodeColor: [0 0.4470 0.7410]
+    MarkerSize: 4
+        Marker: 'o'
+     EdgeColor: [0 0.4470 0.7410]
+     LineWidth: 0.5000
+     LineStyle: '-'
+     NodeLabel: {'3'  '4.5'  '10'  '15'  '20'}
+     EdgeLabel: {}
+         XData: [-0.0014 -1.5136 1.5159 -0.7275 0.7266]
+         YData: [-0.0012 -0.5419 0.5407 -1.4337 1.4361]
+
+  Use GET to show all properties
+
+</pre><img vspace="5" hspace="5" src="ImageGraphDocumentation_06.png" style="width:560px;height:420px;" alt=""> <p>Find the neighbors of the region labeled 15.</p><pre class="codeinput">node_num = find(g.Nodes.Label == 15);
+neighbors_15 = neighbors(g,node_num);
+highlight(gp,node_num,neighbors_15)
+</pre><img vspace="5" hspace="5" src="ImageGraphDocumentation_07.png" style="width:560px;height:420px;" alt=""> <p class="footer">Copyright 2015 The MathWorks, Inc.<br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2015b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Image Graph Documentation
+% These prototype MATLAB functions create and plot graphs from
+% images based on neighbor relationships between pixels. You must
+% have MATLAB R2015b to use them.
+%
+% <matlab:doc('imageGraph') |imageGraph|> creates a graph
+% representing the neighbor relationships for every pixel in an
+% image with a specified size. |imageGraph3| does the same thing for
+% a 3-D image array.
+%
+% <matlab:doc('binaryImageGraph') |binaryImageGraph|> creates a
+% graph representing the neighbor relationships for every foreground
+% pixel in a binary image. |binaryImageGraph3| creates a graph from
+% a 3-D binary image array.
+%
+% <matlab:doc('plotImageGraph') |plotImageGraph|> plots a graph
+% created by |imageGraph| or |binaryImageGraph| with the graph nodes
+% arranged on a pixel grid.
+%
+% <matlab:doc('adjacentRegionGraph') |adjacentRegionGraph|> creates
+% a graph from a label matrix defining image regions. The graph
+% represents the region adjacency relationships.
+%
+%% Example: Image graph with 8-connected pixels
+%
+% Create a graph for a 480-by-640 image with 8-connected pixels.
+
+g = imageGraph([480 640],8)
+
+%%
+% Graph nodes contain the x-coordinate, y-coordinate, and linear
+% index of the corresponding image pixels.
+
+g.Nodes(1:5,:)
+
+%%
+% Plot the image graph using |plotImageGraph|.
+
+plotImageGraph(g)
+axis([100 110 220 230])
+
+%% Example: Image graph with 4-connected pixels
+%
+% Create a graph for a 480-by-640 image with 4-connected pixels.
+
+g = imageGraph([480 640],4)
+
+%%
+
+plotImageGraph(g)
+axis([100 110 220 230])
+
+%% Example: Image graph with special connectivity
+%
+% Use a 3-by-3 connectivity matrix to create an image graph with
+% 6-connected pixels. Each pixel is connected to its north,
+% northeast, east, south, southwest, and west neighbors.
+
+conn = [0 1 1; 1 1 1; 1 1 0];
+g = imageGraph([480 640],conn);
+plotImageGraph(g)
+axis([100 110 220 230])
+
+%% Example: Binary image graph
+%
+% Create a graph whose nodes are the foreground pixels of the binary
+% image text.png (a sample image that is included with the Image
+% Processing Toolbox).
+
+bw = imread('text.png');
+imshow(bw)
+title('Original image')
+
+%%
+g = binaryImageGraph(bw);
+figure
+plotImageGraph(g)
+axis([60 85 30 45])
+
+%% Region Graphs
+% A label matrix defines a set of regions based on each unique
+% element value in the matrix. For example, suppose you had the
+% following label matrix:
+
+L = [10 10 3 4.5 4.5; 10 10 3 4.5 4.5; 20 20 3 15 15; 20 20 3 15 15]
+
+%%
+% This label matrix defines 5 regions:
+%
+% * A 2-by-2 region in the upper left labeled with the value 10. 
+% * A 2-by-2 region in the lower left labeled with the value 20.
+% * A one-pixel-wide vertical region in the middle labeled with the
+% value 3.
+% * A 2-by-2 region in the upper right labeled with the value 4.5.
+% * A 2-by-2 region at the lower right labeled with the value 15.
+%
+% The function |adjacentRegionsGraph| returns a graph with the same
+% number of nodes as labeled regions. Edges in the graph indicate
+% pairs of adjacent regions.
+%
+%% Example: Region graph
+%
+% Compute an adjacent regions graph. Plot the graph, highlighting
+% the nodes connected to the label 15.
+
+g = adjacentRegionsGraph(L)
+
+%%
+% The graph nodes contain the region labels.
+
+g.Nodes
+
+%%
+% The graph edges contain the labels for each adjacent region pair.
+
+g.Edges
+
+%%
+% Plot the graph, capturing the GraphPlot object as an output
+% argument.
+
+gp = plot(g,'NodeLabel',g.Nodes.Label)
+
+%%
+% Find the neighbors of the region labeled 15.
+
+node_num = find(g.Nodes.Label == 15);
+neighbors_15 = neighbors(g,node_num);
+highlight(gp,node_num,neighbors_15)
+
+% Copyright 2015 The MathWorks, Inc.
+##### SOURCE END #####
+--></body></html>

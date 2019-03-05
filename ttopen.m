@@ -1,0 +1,1 @@
+winopen(fileparts(funpath))

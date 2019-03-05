@@ -1,0 +1,228 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>figtitle</title><meta name="generator" content="MATLAB 8.0"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2014-08-18"><meta name="DC.source" content="figtitle_documentation.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, tt, code { font-size:12px; }
+pre { margin:0px 0px 20px; }
+pre.error { color:red; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1><tt>figtitle</tt></h1><!--introduction--><p>This function creates a title centered at the top of a figure. This may be used to add a title to a figure with several subplots.</p><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Syntax</a></li><li><a href="#2">Description</a></li><li><a href="#3">Example 1: Simple case.</a></li><li><a href="#4">Example 2: <tt>figtitle</tt> pairs nicely with <tt>ntitle</tt></a></li><li><a href="#7">Author Info</a></li></ul></div><h2>Syntax<a name="1"></a></h2><pre>figtitle('TitleString')
+figtitle('TitleString','TextProperty','TextValue')
+h = figtitle(...)</pre><h2>Description<a name="2"></a></h2><p><tt>figtitle('TitleString')</tt> centers a title at the top of a figure and sets the figure name to <tt>'TitleString'</tt>.</p><p><tt>figtitle('TitleString','TextProperty',TextValue)</tt> formats the title with property name value pairs (e.g., <tt>'FontSize',20</tt>)</p><p><tt>h = figtitle(...)</tt> returns a handle <tt>h</tt> of the newly-created title.</p><h2>Example 1: Simple case.<a name="3"></a></h2><p>Here we use <tt>figtitle</tt> for a simple case:</p><pre class="codeinput">x = 1:.01:7;
+y = sin(x);
+
+figure;
+subplot(2,2,1)
+plot(3*x,y)
+title(<span class="string">'Exp. 1'</span>)
+
+subplot(2,2,2)
+plot(x,2*y+x)
+title(<span class="string">'Exp. 2'</span>)
+
+subplot(2,2,3)
+plot(x,y)
+title(<span class="string">'Exp. 3'</span>)
+
+subplot(2,2,4)
+plot(x,2*y)
+title(<span class="string">'Exp. 4'</span>)
+
+figtitle(<span class="string">'My Experimental Results'</span>);
+</pre><img vspace="5" hspace="5" src="figtitle_documentation_01.png" alt=""> <h2>Example 2: <tt>figtitle</tt> pairs nicely with <tt>ntitle</tt><a name="4"></a></h2><p>When using <tt>figtitle</tt>, it may be nice to also use <a href="http://www.mathworks.com/matlabcentral/fileexchange/42114-ntitle"><tt>ntitle</tt></a>.</p><pre class="codeinput">x = 1:.01:7;
+y = sin(x);
+
+figure;
+subplot(2,2,1)
+plot(3*x,y)
+ntitle(<span class="string">'experiment 1'</span>,<span class="string">'fontsize'</span>,12)
+box <span class="string">off</span>
+
+subplot(2,2,2)
+plot(x,2*y+x)
+ntitle(<span class="string">'experiment 2'</span>,<span class="string">'fontsize'</span>,12)
+box <span class="string">off</span>
+
+subplot(2,2,3)
+plot(x,-y+5*x)
+ntitle(<span class="string">'experiment 3'</span>,<span class="string">'fontsize'</span>,12)
+box <span class="string">off</span>
+
+subplot(2,2,4)
+plot(x,2*y-3*x)
+ntitle(<span class="string">'experiment 4'</span>,<span class="string">'fontsize'</span>,12);
+box <span class="string">off</span>
+
+h = figtitle(<span class="string">' My Experimental Results'</span>);
+</pre><img vspace="5" hspace="5" src="figtitle_documentation_02.png" alt=""> <p>You may want a fancy <tt>figtitle</tt>.  In the example above we returned a handle <tt>h</tt> of the <tt>figtitle</tt> because now we're going to delete the <tt>figtitle</tt> we just created and make a fancier one.</p><pre class="codeinput">delete(h)
+figtitle(<span class="string">'My Experimental Results'</span>,<span class="keyword">...</span>
+    <span class="string">'fontweight'</span>,<span class="string">'bold'</span>,<span class="keyword">...</span>
+    <span class="string">'fontangle'</span>,<span class="string">'oblique'</span>,<span class="keyword">...</span>
+    <span class="string">'edgecolor'</span>,[.007 .577 .526],<span class="keyword">...</span>
+    <span class="string">'color'</span>,<span class="string">'blue'</span>,<span class="keyword">...</span>
+    <span class="string">'linewidth'</span>,5,<span class="keyword">...</span>
+    <span class="string">'fontsize'</span>,20);
+</pre><img vspace="5" hspace="5" src="figtitle_documentation_03.png" alt=""> <p>Unfortunately, the <tt>publish</tt> command in Matlab makes the figures above look pretty lousy. When you use <tt>figtitle</tt> you'll have much better results than what is shown above--particularly if you export your graphics via <a href="http://www.mathworks.com/matlabcentral/fileexchange/23629-export-fig"><tt>export_fig</tt></a>.</p><h2>Author Info<a name="7"></a></h2><p>Written by Chad A. Greene of the University of Texas at Austin Institute for Geophysics, July 2013.</p><p>Updated August 2014 to include support for invisible figures and now also sets the figure name to the title string.</p><p class="footer"><br><a href="http://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2012b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% |figtitle|
+% This function creates a title centered at the top of a figure. This may be used 
+% to add a title to a figure with several subplots.
+
+%% Syntax
+% 
+%  figtitle('TitleString')
+%  figtitle('TitleString','TextProperty','TextValue')
+%  h = figtitle(...)
+
+%% Description 
+% 
+% |figtitle('TitleString')| centers a title at the top of a figure and sets
+% the figure name to |'TitleString'|. 
+% 
+% |figtitle('TitleString','TextProperty',TextValue)| formats the title with
+% property name value pairs (e.g., |'FontSize',20|)
+% 
+% |h = figtitle(...)| returns a handle |h| of the newly-created title. 
+
+%% Example 1: Simple case.
+% Here we use |figtitle| for a simple case: 
+
+x = 1:.01:7; 
+y = sin(x); 
+
+figure; 
+subplot(2,2,1)
+plot(3*x,y)
+title('Exp. 1') 
+
+subplot(2,2,2)
+plot(x,2*y+x)
+title('Exp. 2') 
+
+subplot(2,2,3)
+plot(x,y)
+title('Exp. 3') 
+
+subplot(2,2,4)
+plot(x,2*y)
+title('Exp. 4') 
+
+figtitle('My Experimental Results');
+
+%% Example 2: |figtitle| pairs nicely with |ntitle|
+% When using |figtitle|, it may be nice to also use <http://www.mathworks.com/matlabcentral/fileexchange/42114-ntitle
+% |ntitle|>. 
+
+x = 1:.01:7; 
+y = sin(x); 
+
+figure; 
+subplot(2,2,1)
+plot(3*x,y)
+ntitle('experiment 1','fontsize',12)
+box off
+
+subplot(2,2,2)
+plot(x,2*y+x)
+ntitle('experiment 2','fontsize',12)
+box off
+
+subplot(2,2,3)
+plot(x,-y+5*x)
+ntitle('experiment 3','fontsize',12)
+box off
+
+subplot(2,2,4)
+plot(x,2*y-3*x)
+ntitle('experiment 4','fontsize',12);
+box off
+
+h = figtitle(' My Experimental Results'); 
+
+%% 
+% You may want a fancy |figtitle|.  In the example above we returned a
+% handle |h| of the |figtitle| because now we're going to delete the
+% |figtitle| we just created and make a fancier one.  
+
+delete(h) 
+figtitle('My Experimental Results',...
+    'fontweight','bold',...
+    'fontangle','oblique',...
+    'edgecolor',[.007 .577 .526],...
+    'color','blue',...
+    'linewidth',5,...
+    'fontsize',20); 
+
+%% 
+% Unfortunately, the |publish| command in Matlab makes the figures above
+% look pretty lousy. When you use |figtitle| you'll have much better
+% results than what is shown aboveREPLACE_WITH_DASH_DASHparticularly if you export your graphics via 
+% <http://www.mathworks.com/matlabcentral/fileexchange/23629-export-fig |export_fig|>. 
+
+%% Author Info
+% Written by Chad A. Greene of the University of Texas at Austin
+% Institute for Geophysics, July 2013. 
+% 
+% Updated August 2014 to include support for invisible figures 
+% and now also sets the figure name to the title string. 
+##### SOURCE END #####
+--></body></html>

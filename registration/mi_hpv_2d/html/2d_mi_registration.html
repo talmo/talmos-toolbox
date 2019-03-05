@@ -1,0 +1,296 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN">
+<html xmlns:mwsh="http://www.mathworks.com/namespace/mcode/v1/syntaxhighlight.dtd">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>2-D rigid body Image registration using mutual information.</title>
+      <meta name="generator" content="MATLAB 7.5">
+      <meta name="date" content="2008-03-05">
+      <meta name="m-file" content="2d_mi_registration"><style>
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <div class="content">
+         <h1>2-D rigid body Image registration using mutual information.</h1>
+         <introduction>
+            <p>Rigid body 2-D image co-registration (translation and rotation) is performed using maximization of mutual information.</p>
+            <p>Function is implemented in c-code and compiled using the Matlab compiler to minimize computation time.</p>
+            <p>Mutual information joint entropy matrix is computed using the Hanning windowed sinc function as the kernel of interpolation,
+               which is the HPV estimation method [1].
+            </p>
+            <p>Maximization of the joint entropy matrix is carried out using Powel's Direction set method [2] with original c-code very slightly
+               modified from J.P. Moreau's code[3].
+            </p>
+            <p>[1] Lu X, et al., Mutual information-based multimodal image registration using a novel joint histogram estimation, Comput
+               Med Imaging Graph (2008), doi: 10.1016/j.compmedimag.2007.12.001
+            </p>
+            <p>[2] Numerical Recipes, The Art of Scientific Computing By W.H. Press, B.P. Flannery, S.A. Teukolsky and W.T. Vetterling, Cambridge
+               University Press, 1986
+            </p>
+            <p>[3] <a href="http://pagesperso-orange.fr/jean-pierre.moreau/Cplus/tpowell_cpp.txt">http://pagesperso-orange.fr/jean-pierre.moreau/Cplus/tpowell_cpp.txt</a></p>
+            <p>See also:</p>
+         </introduction>
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#1">Syntax</a></li>
+               <li><a href="#2">Example</a></li>
+               <li><a href="#5">Disclaimer</a></li>
+               <li><a href="#6">References</a></li>
+            </ul>
+         </div>
+         <h2>Syntax<a name="1"></a></h2><pre> [parameters xy xy_0] = mi_hpv_2d(Reference Image,Floating Image)</pre><p>Input:</p><pre> Reference Image: image that will be compared too.  Must be uint8.  Take
+ care to scale image properly.</pre><pre> Floating Image: image that will be rotated and translated.  Must be
+ uint8.  Take care to scale image properly.</pre><p>Output:</p><pre> parameters: 3x1 Array with the form [DeltaX  DeltaY  DeltaTheta].
+ Theta is counterclockwise in-plane rotation in radians.  DeltaX/Y
+ are translations in pixels.</pre><pre> xy: Optional output.  8x1 Array with the x and y coordinates of the
+ corners of the output matix.</pre><pre> xy_0: Optional output.  8x1 Array with the x and y coordinates of the
+ corners of the input matrix.</pre><pre> The output provides the necessary tools for you to translate the Float
+ image, but does not move it for you.  You have the option of using
+ parameters and moving the reference image (using circshift and imrotate
+ for example) or you can use the xy and xy_0 output to more accurately
+ transform the reference image, but its slightly more complicated.  The
+ inclusion of both more has to do with me being unsatisfied with the
+ lack of precision in circshift and imrotate.  I recommend the latter
+ approach.</pre><h2>Example<a name="2"></a></h2>
+         <p>We will use the Shepp-Logan phantom (phantom.m).  Note we first scale the image to have signal intensities in the range 0-255
+            and then convert to uint8.
+         </p><pre class="codeinput">Ref = imread(<span class="string">'sl_phantom.tif'</span>); <span class="comment">% same as: Ref = uint8(phantom.*255);</span>
+Float = imread(<span class="string">'phantom_transformed.tif'</span>);
+diff = abs(Float-Ref);
+figure(1);
+subplot(1,3,1);
+imshow(Ref);
+title(<span class="string">'Reference image'</span>)
+subplot(1,3,2);
+imshow(Float);
+title(<span class="string">'Float image'</span>)
+subplot(1,3,3);
+imshow(diff);
+title(<span class="string">'Difference image'</span>)
+</pre><img vspace="5" hspace="5" src="2d_mi_registration_01.png"> <p>The image has first been rotated counterclockwise 30 degrees and then shifted in the x and y directions. Input the appropriate
+            syntax and wait patiently.  Operating times have been clocked on my 2Ghz pentium processor at around 40 seconds.  This time
+            is of course dependent upon your matrix size and how far it must search to find the maximum.
+         </p><pre class="codeinput">[para, xy, xy_0] = mi_hpv_2d(Ref,Float);
+</pre><pre class="codeoutput">Co-registering images, please wait...
+Co-registration complete: dX=0.4 dY=-11.1 dTheta=-0.50106
+</pre><p>This code is using the tformarray (and associated) function, which uses the optional xy and xy_0 corner locations.  Again
+            you can call the function with just para and use circshift and imrotate if you like.
+         </p><pre class="codeinput">xy = reshape(xy,[2 4])';
+xy_0 = reshape(xy_0,[2 4])';
+T = maketform(<span class="string">'projective'</span>,xy_0,xy);
+R = makeresampler(<span class="string">'cubic'</span>,<span class="string">'replicate'</span>);
+Coregged = tformarray(Float,T,R,[1 2],[1 2],[size(Ref,1) size(Ref,2)],[],[]);
+
+diff2 = abs(Coregged-Ref);
+figure(2)
+subplot(1,3,1);
+imshow(Ref);
+title(<span class="string">'Reference image'</span>)
+subplot(1,3,2);
+imshow(Coregged);
+title(<span class="string">'Co-Registered image'</span>)
+subplot(1,3,3);
+imshow(diff2);
+title(<span class="string">'Difference image'</span>)
+</pre><img vspace="5" hspace="5" src="2d_mi_registration_02.png"> <h2>Disclaimer<a name="5"></a></h2>
+         <p>This code has been compiled only for a Dell computer running windows vista.  It is pretty trivial to re-compile for other
+            operating systems, and the c-code has been included for this purpose.  You of course need to have the matlab compiler package
+            license. Also, I only adapted the Powell code, so I don't know that it is optimum. Eventually, I will probably check this.
+             I'm pretty sure my MI calculating code is correct, however no one is perfect.  Please test this code yourself before blindly
+            applying it.
+         </p>
+         <p>Please email me with questions/complaints/errors: <a href="mailto:matthew.sochor@gmail.com">matthew.sochor@gmail.com</a></p>
+         <h2>References<a name="6"></a></h2>
+         <p>If you do use this code in any publication, please include the above references.</p>
+         <p class="footer"><br>
+            Published with MATLAB&reg; 7.5<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% 2-D rigid body Image registration using mutual information. 
+% Rigid body 2-D image co-registration (translation and rotation) is performed
+% using maximization of mutual information.  
+%
+% Function is implemented in c-code and compiled using the Matlab compiler
+% to minimize computation time.  
+%
+% Mutual information joint entropy matrix is computed using the Hanning
+% windowed sinc function as the kernel of interpolation, which is the HPV
+% estimation method [1].  
+%
+% Maximization of the joint entropy matrix is carried out using Powel's
+% Direction set method [2] with original c-code very slightly modified from
+% J.P. Moreau's code[3].  
+%
+% [1] Lu X, et al., Mutual information-based multimodal image registration
+% using a novel joint histogram estimation, Comput Med Imaging Graph
+% (2008), doi: 10.1016/j.compmedimag.2007.12.001
+%
+% [2] Numerical Recipes, The Art of Scientific Computing By W.H. Press, 
+% B.P. Flannery, S.A. Teukolsky and W.T. Vetterling, Cambridge University 
+% Press, 1986
+%
+% [3] http://pagesperso-orange.fr/jean-pierre.moreau/Cplus/tpowell_cpp.txt
+%
+% See also: 
+
+%% Syntax
+%   [parameters xy xy_0] = mi_hpv_2d(Reference Image,Floating Image)
+%
+% Input:
+%
+%   Reference Image: image that will be compared too.  Must be uint8.  Take
+%   care to scale image properly.
+%
+%   Floating Image: image that will be rotated and translated.  Must be
+%   uint8.  Take care to scale image properly.
+%
+% Output:
+%
+%   parameters: 3x1 Array with the form [DeltaX  DeltaY  DeltaTheta].  
+%   Theta is counterclockwise in-plane rotation in radians.  DeltaX/Y
+%   are translations in pixels.
+%   
+%   xy: Optional output.  8x1 Array with the x and y coordinates of the
+%   corners of the output matix.
+%
+%   xy_0: Optional output.  8x1 Array with the x and y coordinates of the
+%   corners of the input matrix.
+%
+%   The output provides the necessary tools for you to translate the Float
+%   image, but does not move it for you.  You have the option of using
+%   parameters and moving the reference image (using circshift and imrotate
+%   for example) or you can use the xy and xy_0 output to more accurately
+%   transform the reference image, but its slightly more complicated.  The
+%   inclusion of both more has to do with me being unsatisfied with the
+%   lack of precision in circshift and imrotate.  I recommend the latter
+%   approach.
+
+%% Example
+% We will use the Shepp-Logan phantom (phantom.m).  Note we first scale the
+% image to have signal intensities in the range 0-255 and then convert to
+% uint8.  
+
+Ref = imread('sl_phantom.tif'); % same as: Ref = uint8(phantom.*255);
+Float = imread('phantom_transformed.tif');
+diff = abs(Float-Ref);
+figure(1);
+subplot(1,3,1);
+imshow(Ref);
+title('Reference image')
+subplot(1,3,2);
+imshow(Float);
+title('Float image')
+subplot(1,3,3);
+imshow(diff);
+title('Difference image')
+%%
+% The image has first been rotated counterclockwise 30 degrees and then
+% shifted in the x and y directions. Input the appropriate syntax and wait
+% patiently.  Operating times have been clocked on my 2Ghz pentium 
+% processor at around 40 seconds.  This time is of course dependent upon
+% your matrix size and how far it must search to find the maximum.
+
+[para, xy, xy_0] = mi_hpv_2d(Ref,Float);
+%%
+% This code is using the tformarray (and associated) function, which uses
+% the optional xy and xy_0 corner locations.  Again you can call the function
+% with just para and use circshift and imrotate if you like. 
+
+xy = reshape(xy,[2 4])';
+xy_0 = reshape(xy_0,[2 4])';
+T = maketform('projective',xy_0,xy);
+R = makeresampler('cubic','replicate'); 
+Coregged = tformarray(Float,T,R,[1 2],[1 2],[size(Ref,1) size(Ref,2)],[],[]);
+
+diff2 = abs(Coregged-Ref);
+figure(2)
+subplot(1,3,1);
+imshow(Ref);
+title('Reference image')
+subplot(1,3,2);
+imshow(Coregged);
+title('Co-Registered image')
+subplot(1,3,3);
+imshow(diff2);
+title('Difference image')
+%% Disclaimer
+% This code has been compiled only for a Dell computer running windows
+% vista.  It is pretty trivial to re-compile for other operating systems,
+% and the c-code has been included for this purpose.  You of course need to
+% have the matlab compiler package license.
+% Also, I only adapted the Powell code, so I don't know that it is optimum.
+% Eventually, I will probably check this.  I'm pretty sure my MI
+% calculating code is correct, however no one is perfect.  Please test this
+% code yourself before blindly applying it.  
+%
+% Please email me with questions/complaints/errors:
+% matthew.sochor@gmail.com
+%% References
+% If you do use this code in any publication, please include the above
+% references.
+##### SOURCE END #####
+-->
+   </body>
+</html>

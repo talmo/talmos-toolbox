@@ -1,0 +1,288 @@
+<html xmlns:mwsh="http://www.mathworks.com/namespace/mcode/v1/syntaxhighlight.dtd">
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <!--
+This HTML is auto-generated from an M-file.
+To make changes, update the M-file and republish this document.
+      -->
+      <title>FITELLIPSE : Least squares ellipse fitting demonstration</title>
+      <meta name="generator" content="MATLAB 7.1">
+      <meta name="date" content="2007-05-28">
+      <meta name="m-file" content="ellipsedemo"><style>
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows.  On Gecko-based browsers, the shrink-to-fit doesn't work. */ 
+p,h1,h2,div.content div {
+  /* for MATLAB's browser */
+  width: 600px;
+  /* for Mozilla, but the "width" tag overrides it anyway */
+  max-width: 600px;
+  /* for IE */
+  width:expression(document.body.clientWidth > 620 ? "600px": "auto" );
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head>
+   <body>
+      <div class="content">
+         <h1>FITELLIPSE : Least squares ellipse fitting demonstration</h1>
+         <introduction>
+            <p>Richard Brown, May 28, 2007</p>
+         </introduction>
+         <h2>Contents</h2>
+         <div>
+            <ul>
+               <li><a href="#1">Introduction</a></li>
+               <li><a href="#2">Linear least squares ellipse fitting - minimising algebraic distance</a></li>
+               <li><a href="#8">Nonlinear ellipse fitting - minising geometric distance</a></li>
+               <li><a href="#9">Caveat - fitting circles</a></li>
+               <li><a href="#10">References</a></li>
+            </ul>
+         </div>
+         <h2>Introduction<a name="1"></a></h2>
+         <p>This submission is based largely on the paper "Least-Squares Fitting of Circles and Ellipses", W. Gander, G. H. Golub, R.
+            Strebel, BIT Numerical Mathematics, Springer 1994, and provides methods of fitting ellipses based on minimising algebraic
+            distance (linear least squares) and geometric distance (nonlinear least squares)
+         </p>
+         <h2>Linear least squares ellipse fitting - minimising algebraic distance<a name="2"></a></h2>
+         <p>Least squares fitting of ellipses is a deceptively tricky task. Let's begin by specifying a general equation for an ellipse
+            in 2D
+         </p>
+         <p><img vspace="5" hspace="5" src="ellipsedemo_eq177471.png"> </p>
+         <p>where A is a 2x2 matrix, <b>x</b> = <tt>[x; y]</tt>. For more than 5 data points, and an appropriate constraint this is an overdetermined linear system, and a least squares
+            solution minimising the algebraic distance
+         </p>
+         <p><img vspace="5" hspace="5" src="ellipsedemo_eq8698.png"> </p>
+         <p>can be found by linear least squares. Different choices of constraint will create different ellipse fits. It is desirable
+            to choose a constraint on the parameters that is invariant under Euclidean transformations, so that you will get the same
+            ellipse fit no matter where the point set is located in the plane. It turns out that any function of the eigenvalues of A
+            is an appropriate such constraint. There are a number of different posibilities, e.g. FEX no. 7012 uses the constraint:
+         </p>
+         <p><img vspace="5" hspace="5" src="ellipsedemo_eq36075.png"> </p>
+         <p>Bookstein (1979) suggested the constraint</p>
+         <p><img vspace="5" hspace="5" src="ellipsedemo_eq15494.png"> </p>
+         <p>And Gander, Golub, and Strebel (1994) suggested</p>
+         <p><img vspace="5" hspace="5" src="ellipsedemo_eq45548.png"> </p>
+         <p>All of which produce linear least squares systems. <tt>fitellipse</tt> implements the latter two as options <tt>'bookstein'</tt> and <tt>'trace'</tt> for the <tt>'constraint'</tt> property, with <tt>'bookstein'</tt> as default. <tt>'plotellipse'</tt> can be used to plot the fitted ellipses. We can have a look at the effect of the different constraints as follows:
+         </p><pre class="codeinput"><span class="comment">% A set of points</span>
+x = [1 2 5 7 9 6 3 8;
+     7 6 8 7 5 7 2 4];
+
+<span class="comment">% Fit an ellipse using the Bookstein constraint</span>
+[zb, ab, bb, alphab] = fitellipse(x, <span class="string">'linear'</span>);
+
+<span class="comment">% Fit an ellipse using the Trace constraint</span>
+[zt, at, bt, alphat] = fitellipse(x, <span class="string">'linear'</span>, <span class="string">'constraint'</span>, <span class="string">'trace'</span>);
+
+<span class="comment">% Plot the results</span>
+plot(x(1,:), x(2,:), <span class="string">'ro'</span>)
+hold <span class="string">on</span>
+axis <span class="string">equal</span>
+axis([-1 12 1 10])
+plotellipse(zb, ab, bb, alphab, <span class="string">'b--'</span>)
+plotellipse(zt, at, bt, alphat, <span class="string">'k--'</span>)
+legend(<span class="string">'Data points'</span>, <span class="string">'Linear Bookstein fit'</span>, <span class="string">'Linear Trace fit'</span>)
+</pre><img vspace="5" hspace="5" src="ellipsedemo_01.png"> <h2>Nonlinear ellipse fitting - minising geometric distance<a name="8"></a></h2>
+         <p>The above methods do not minimise the geometric error i.e. the Euclidean distance of the data points to the fitted ellipse,
+            and as such can produce some undesirable results. The problem is that minising geometric error by least squares is a nonlinear
+            least squares problem, and requires an iterative method to solve it as there is no closed form solution.
+         </p>
+         <p><tt>fitellipse</tt> provides a Gauss-Newton implementation which minimises geometric error. This can be used as follows:
+         </p><pre class="codeinput">clf
+[zg, ag, bg, alphag] = fitellipse(x);
+plot(x(1,:), x(2,:), <span class="string">'ro'</span>)
+hold <span class="string">on</span>
+axis <span class="string">equal</span>
+axis([-2 10 1 12])
+plotellipse(zb, ab, bb, alphab, <span class="string">'b--'</span>)
+plotellipse(zt, at, bt, alphat, <span class="string">'g--'</span>)
+plotellipse(zg, ag, bg, alphag, <span class="string">'k'</span>)
+legend(<span class="string">'Data points'</span>, <span class="string">'Algebraic best fit - Bookstein constraint'</span>, <span class="keyword">...</span>
+    <span class="string">'Algebraic best fit - Trace constraint'</span>, <span class="keyword">...</span>
+    <span class="string">'Geometric best fit - nonlinear least squares'</span>)
+</pre><img vspace="5" hspace="5" src="ellipsedemo_02.png"> <h2>Caveat - fitting circles<a name="9"></a></h2>
+         <p>There is one potential problem with the Gauss Newton implementation employed here. If the ellipse is in fact a circle, and
+            a == b, then the Jacobian matrix will be rank-deficient and the method may break down. This could be mitigated by switching
+            to a more involved least squares method such as Levenberg-Marquardt, however I don't have the time or inclination to implement
+            this myself, and I have stayed intentionally clear of using <tt>lsqnonlin</tt> as this requires the optimisation toolbox.
+         </p>
+         <p>Most of the time this won't affect you, but if it does you can use either one of the linear estimates <tt>fitellipse(x, 'linear')</tt> as discussed above, or a circle fitting routine e.g. <tt>fitcircle</tt> <a href="http://www.mathworks.com/matlabcentral/fileexchange/loadFile.do?objectId=15060&amp;objectType=file">http://www.mathworks.com/matlabcentral/fileexchange/loadFile.do?objectId=15060&amp;objectType=file</a></p>
+         <h2>References<a name="10"></a></h2>
+         <div>
+            <ul>
+               <li>FEX 7012: "Stable Direct Least Squares Fit of Ellipses", <a href="http://www.mathworks.com/matlabcentral/fileexchange/loadFile.do?objectId=7012&amp;objectType=FILE">http://www.mathworks.com/matlabcentral/fileexchange/loadFile.do?objectId=7012&amp;objectType=FILE</a></li>
+               <li>Bookstein (1979) "Fitting Conic Sections to Scattered Data', F.L. Bookstein, Computer Graphics and Image Processing (1979)
+                  pp. 56-71
+               </li>
+            </ul>
+         </div>
+         <p class="footer"><br>
+            Published with MATLAB&reg; 7.1<br></p>
+      </div>
+      <!--
+##### SOURCE BEGIN #####
+%% FITELLIPSE : Least squares ellipse fitting demonstration
+% Richard Brown, May 28, 2007
+
+%% Introduction
+% This submission is based largely on the paper "Least-Squares Fitting of
+% Circles and Ellipses", W. Gander, G. H. Golub, R. Strebel, BIT Numerical
+% Mathematics, Springer 1994, and provides methods of fitting ellipses
+% based on minimising algebraic distance (linear least squares) and
+% geometric distance (nonlinear least squares)
+
+%% Linear least squares ellipse fitting - minimising algebraic distance
+% Least squares fitting of ellipses is a deceptively tricky task. Let's
+% begin by specifying a general equation for an ellipse in 2D
+%%
+% 
+% $$F(\mathbf{x}) = \mathbf{x}^T A \mathbf{x} + \mathbf{b}^T \mathbf{x} + c = 0$$
+% 
+% where A is a 2x2 matrix, *x* = |[x; y]|. For more than 5 data points, and
+% an appropriate constraint this is an overdetermined linear system, and a 
+% least squares solution minimising the algebraic distance 
+%%
+% 
+% $$\Sigma F(\mathbf{x})^2$$
+% 
+% can be found by linear least squares. Different choices of constraint
+% will create different ellipse fits. It is desirable to choose a
+% constraint on the parameters that is invariant under Euclidean
+% transformations, so that you will get the same ellipse fit no matter
+% where the point set is located in the plane. It turns out that any
+% function of the eigenvalues of A is an appropriate such constraint. There
+% are a number of different posibilities, e.g. FEX no. 7012 
+% uses the constraint:
+%%
+% 
+% $$\textrm{det}(A) = \lambda_1 \lambda_2 = 1$$
+% 
+% Bookstein (1979) suggested the constraint
+%%
+% 
+% $$\lambda_1^2 + \lambda_2^2 = 1$$
+% 
+% And Gander, Golub, and Strebel (1994) suggested
+%%
+% 
+% $$\textrm{Trace}(A) = \lambda_1 + \lambda_2 = 1$$
+% 
+% All of which produce linear least squares systems. |fitellipse|
+% implements the latter two as options |'bookstein'| and |'trace'| for the
+% |'constraint'| property, with |'bookstein'| as default. |'plotellipse'|
+% can be used to plot the fitted ellipses. We can have a look at the effect
+% of the different constraints as follows:
+
+% A set of points
+x = [1 2 5 7 9 6 3 8; 
+     7 6 8 7 5 7 2 4];
+ 
+% Fit an ellipse using the Bookstein constraint
+[zb, ab, bb, alphab] = fitellipse(x, 'linear');
+
+% Fit an ellipse using the Trace constraint
+[zt, at, bt, alphat] = fitellipse(x, 'linear', 'constraint', 'trace');
+
+% Plot the results
+plot(x(1,:), x(2,:), 'ro')
+hold on
+axis equal
+axis([-1 12 1 10])
+plotellipse(zb, ab, bb, alphab, 'bREPLACE_WITH_DASH_DASH')
+plotellipse(zt, at, bt, alphat, 'kREPLACE_WITH_DASH_DASH')
+legend('Data points', 'Linear Bookstein fit', 'Linear Trace fit')
+
+%% Nonlinear ellipse fitting - minising geometric distance
+% The above methods do not minimise the geometric error i.e. the Euclidean
+% distance of the data points to the fitted ellipse, and as such can
+% produce some undesirable results. The problem is that minising geometric
+% error by least squares is a nonlinear least squares problem, and 
+% requires an iterative method to solve it as there is no closed form
+% solution.
+%
+% |fitellipse| provides a Gauss-Newton implementation which minimises 
+% geometric error. This can be used as follows:
+clf
+[zg, ag, bg, alphag] = fitellipse(x);
+plot(x(1,:), x(2,:), 'ro')
+hold on
+axis equal
+axis([-2 10 1 12])
+plotellipse(zb, ab, bb, alphab, 'bREPLACE_WITH_DASH_DASH')
+plotellipse(zt, at, bt, alphat, 'gREPLACE_WITH_DASH_DASH')
+plotellipse(zg, ag, bg, alphag, 'k')
+legend('Data points', 'Algebraic best fit - Bookstein constraint', ...
+    'Algebraic best fit - Trace constraint', ...
+    'Geometric best fit - nonlinear least squares')
+
+
+%% Caveat - fitting circles
+% There is one potential problem with the Gauss Newton implementation
+% employed here. If the ellipse is in fact a circle, and a == b, then the
+% Jacobian matrix will be rank-deficient and the method may break down.
+% This could be mitigated by switching to a more involved least squares
+% method such as Levenberg-Marquardt, however I don't have the time or 
+% inclination to implement this myself, and I have stayed intentionally 
+% clear of using |lsqnonlin| as this requires the optimisation toolbox. 
+%
+% Most of the time
+% this won't affect you, but if it does you can use either one of the
+% linear estimates |fitellipse(x, 'linear')| as discussed above, or a 
+% circle fitting routine e.g. |fitcircle| 
+% http://www.mathworks.com/matlabcentral/fileexchange/loadFile.do?objectId=15060&objectType=file
+
+%% References
+%%
+% 
+% * FEX 7012: "Stable Direct Least Squares Fit of Ellipses", http://www.mathworks.com/matlabcentral/fileexchange/loadFile.do?objectId=7012&objectType=FILE
+% * Bookstein (1979) "Fitting Conic Sections to Scattered Data', F.L.
+% Bookstein, Computer Graphics and Image Processing (1979) pp. 56-71
+% 
+
+##### SOURCE END #####
+-->
+   </body>
+</html>

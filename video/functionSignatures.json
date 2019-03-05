@@ -1,0 +1,9 @@
+{
+"get_duration": {"inputs": [ {"name":"filename","kind":"required","type":"file"} ]},
+"get_fps": {"inputs": [ {"name":"filename","kind":"required","type":"file"} ]},
+"get_num_frames": {"inputs": [ {"name":"filename","kind":"required","type":"file"} ]},
+"readFrames": {"inputs": [ {"name":"videoPath","kind":"required","type":"file"},
+                           {"name":"frameNums","kind":"ordered","type":"numeric"},
+                           {"name":"isGrayscale","kind":"ordered","type":"logical"} ]},
+"vidinfo": {"inputs": [ {"name":"filepath","kind":"required","type":"file"} ]}
+}

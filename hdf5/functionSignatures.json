@@ -1,0 +1,11 @@
+{
+"h5att2struct": {"inputs": [{"name":"filepath","type":"filepath=*.h5"}]},
+"h5dsinfo": {"inputs": [{"name":"filepath","type":"filepath=*.h5"}]},
+"h5getdatasets": {"inputs": [{"name":"filepath","type":"filepath=*.h5"}]},
+"h5play": {"inputs": [{"name":"filepath","type":"filepath=*.h5"}]},
+"h5readframes": {"inputs": [{"name":"filepath","type":"filepath=*.h5"}]},
+"h5readgroup": {"inputs": [{"name":"filepath","type":"filepath=*.h5"}]},
+"h5save": {"inputs": [{"name":"filepath","type":"filepath=*.h5"}]},
+"h5size": {"inputs": [{"name":"filepath","type":"filepath=*.h5"}]},
+"h5struct2att": {"inputs": [{"name":"filepath","type":"filepath=*.h5"}]}
+}

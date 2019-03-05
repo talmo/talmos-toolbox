@@ -1,0 +1,5 @@
+Image Graphs
+
+Image Graphs is a collection of several functions to make and visualize graphs based on pixel neighbor relationships in an image. The functions imageGraph and imageGraph3 make graphs containing one node for every pixel in an image. The functions binaryImageGraph and binaryImageGraph3 make graphs containing one node for every foreground pixel in a binary image. The function adjacentRegionGraphs produces a graph from a label matrix. Edges in the graph represent adjacent labeled regions. The function plotImageGraph visualizes graphs produced by imageGraph and binaryImageGraph.
+
+Image Graphs uses the graph functionality introduced in MATLAB R2015b.
